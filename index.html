@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -10,6 +11,7 @@
   <div class="form-container">
     <h1>Регистрация</h1>
     <form id="signupForm" novalidate>
+      
       <div class="field">
         <label for="phone">Телефон</label>
         <input type="text" id="phone" name="phone" placeholder="+79991234567">
@@ -18,7 +20,17 @@
 
       <div class="field">
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" placeholder="Минимум 8 символов">
+        
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" placeholder="Минимум 8 символов">
+          <button
+            type="button"
+            class="toggle-password"
+            data-target="password"
+            aria-label="Показать пароль"
+          >🙈</button>
+        </div>
+
         <div class="strength-meter">
           <div class="strength-bar" id="strengthBar"></div>
         </div>
@@ -28,7 +40,17 @@
 
       <div class="field">
         <label for="confirmPassword">Повторите пароль</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
+
+        <div class="password-wrapper">
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
+          <button
+            type="button"
+            class="toggle-password"
+            data-target="confirmPassword"
+            aria-label="Показать пароль"
+          >🙈</button>
+        </div>
+
         <span class="error" id="confirmError"></span>
       </div>
 

@@ -115,3 +115,22 @@ form.addEventListener('submit', (e) => {
 });
 
 updateSubmitButtonState();
+
+const toggleButtons = document.querySelectorAll('.toggle-password');
+
+toggleButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const inputId = button.dataset.target;
+    const input = document.getElementById(inputId);
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      button.textContent = '👁';
+      button.setAttribute('aria-label', 'Скрыть пароль');
+    } else {
+      input.type = 'password';
+      button.textContent = '🙈';
+      button.setAttribute('aria-label', 'Показать пароль');
+    }
+  });
+});
