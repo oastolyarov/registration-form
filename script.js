@@ -60,7 +60,7 @@ function isFormValid() {
 }
 
 function updateSubmitButtonState() {
-  submitBtn.disabled = false;
+  submitBtn.disabled = !isFormValid();
   submitBtn.style.opacity = submitBtn.disabled ? '0.5' : '1';
   submitBtn.style.cursor = submitBtn.disabled ? 'not-allowed' : 'pointer';
 }
