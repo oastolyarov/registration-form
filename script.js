@@ -50,6 +50,7 @@ function updateStrengthUI(value) {
   strengthBar.style.width = widths[strength];
   strengthBar.style.background = colors[strength];
   strengthLabel.textContent = labels[strength];
+  //test
 }
 
 function isFormValid() {
