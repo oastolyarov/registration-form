@@ -3,23 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Форма регистрации — учебный проект</title>
+  <title>Регистрация</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="form-container">
-    <h1>Регистрация</h1>
+    <div class="form-head">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </span>
+      <h1>Регистрация</h1>
+      <p class="subtitle">Создайте аккаунт за пару секунд</p>
+    </div>
+
     <form id="signupForm" novalidate>
       <div class="field">
         <label for="phone">Телефон</label>
-        <input type="text" id="phone" name="phone" placeholder="+79991234567">
+        <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" inputmode="numeric" maxlength="18" autocomplete="tel">
         <span class="error" id="phoneError"></span>
       </div>
 
       <div class="field">
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" placeholder="Минимум 8 символов">
-        <div class="strength-meter">
+        <input type="password" id="password" name="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+        <div class="strength-meter" aria-hidden="true">
+          <span class="segment"></span>
+          <span class="segment"></span>
+          <span class="segment"></span>
+          <span class="segment"></span>
           <div class="strength-bar" id="strengthBar"></div>
         </div>
         <span class="strength-label" id="strengthLabel"></span>
@@ -28,13 +44,31 @@
 
       <div class="field">
         <label for="confirmPassword">Повторите пароль</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль" autocomplete="new-password">
         <span class="error" id="confirmError"></span>
       </div>
 
       <button type="submit" id="submitBtn">Зарегистрироваться</button>
-      <div class="success" id="successMessage"></div>
     </form>
+  </div>
+
+  <div class="toast" id="successMessage" role="status" aria-live="polite">
+    <span class="toast-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5"/>
+      </svg>
+    </span>
+    <span id="successText">Регистрация прошла успешно!</span>
+  </div>
+
+  <div class="pasha-pop" id="pashaPop" role="status" aria-live="polite">
+    <div class="pasha-bubble">От Паши ок!</div>
+    <img src="assets/pasha.png" alt="Паша" class="pasha-img">
+  </div>
+
+  <div class="sasha-pop" id="sashaPop" role="status" aria-live="polite">
+    <img src="assets/sasha.png" alt="Саша" class="sasha-img">
+    <div class="sasha-bubble">От Саши тоже!</div>
   </div>
 
   <script src="script.js"></script>

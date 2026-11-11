@@ -3,51 +3,97 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
-  background: #f4f5f7;
+  margin: 0;
+  background: linear-gradient(160deg, #eef2ff 0%, #f8fafc 55%, #eef6f1 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  margin: 0;
+  padding: 24px;
 }
 
 .form-container {
+  width: 100%;
+  max-width: 380px;
   background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  width: 360px;
+  border: 1px solid #eceff5;
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  box-shadow: 0 24px 60px rgba(31, 41, 90, 0.12);
+}
+
+/* Заголовок */
+.form-head {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+  margin-bottom: 16px;
 }
 
 h1 {
-  font-size: 22px;
-  margin-bottom: 24px;
-  color: #1a1a2e;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+  letter-spacing: -0.02em;
 }
 
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Поля */
 .field {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 label {
   display: block;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
   margin-bottom: 6px;
-  color: #333;
 }
 
 input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d0d3d9;
-  border-radius: 8px;
-  font-size: 14px;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #111827;
+  background: #fafbfc;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+input::placeholder {
+  color: #9ca3af;
 }
 
 input:focus {
   outline: none;
-  border-color: #4A6CF7;
+  border-color: #6366f1;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
 }
 
 .error {
@@ -55,51 +101,226 @@ input:focus {
   color: #e5484d;
   font-size: 12px;
   margin-top: 6px;
-  min-height: 14px;
+  min-height: 15px;
+  line-height: 1.4;
 }
 
+/* Индикатор надёжности пароля */
 .strength-meter {
+  position: relative;
   height: 6px;
-  background: #eaeaea;
-  border-radius: 4px;
   margin-top: 8px;
+  border-radius: 999px;
+  background: #eef1f6;
   overflow: hidden;
 }
 
+.segment {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 25%;
+  border-right: 3px solid #ffffff;
+}
+
+.segment:nth-child(1) { left: 0; }
+.segment:nth-child(2) { left: 25%; }
+.segment:nth-child(3) { left: 50%; }
+.segment:nth-child(4) { left: 75%; border-right: none; }
+
 .strength-bar {
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
   width: 0%;
   background: #e5484d;
+  border-radius: 999px;
   transition: width 0.3s ease, background 0.3s ease;
 }
 
 .strength-label {
   display: block;
   font-size: 12px;
-  margin-top: 4px;
-  color: #666;
+  margin-top: 6px;
+  color: #6b7280;
+  min-height: 15px;
 }
 
+/* Кнопка */
 button {
   width: 100%;
-  padding: 12px;
-  background: #4A6CF7;
-  color: white;
+  height: 48px;
+  margin-top: 6px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #ffffff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
 }
 
-button:hover {
-  background: #3a5ce4;
+button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  box-shadow: 0 10px 24px rgba(79, 70, 229, 0.4);
 }
 
-.success {
-  margin-top: 16px;
-  color: #1a7f37;
+button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  background: #c7cad9;
+  box-shadow: none;
+}
+
+/* Toast-уведомление об успехе */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, -24px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: #16a34a;
+  color: #ffffff;
+  border-radius: 12px;
   font-size: 14px;
-  text-align: center;
-  min-height: 16px;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(22, 163, 74, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+}
+
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* Всплывающее «От Паши ок!» в нижнем правом углу */
+.pasha-pop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.92);
+  transform-origin: bottom right;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  pointer-events: none;
+}
+
+.pasha-pop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.pasha-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(31, 41, 90, 0.3);
+}
+
+.pasha-bubble {
+  position: relative;
+  margin-bottom: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 8px 24px rgba(31, 41, 90, 0.16);
+  white-space: nowrap;
+}
+
+.pasha-bubble::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  bottom: 16px;
+  border: 6px solid transparent;
+  border-left-color: #ffffff;
+}
+
+/* Зеркальный блок слева — «От Саши тоже!» */
+.sasha-pop {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.92);
+  transform-origin: bottom left;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  pointer-events: none;
+}
+
+.sasha-pop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.sasha-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(31, 41, 90, 0.3);
+}
+
+.sasha-bubble {
+  position: relative;
+  margin-bottom: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 8px 24px rgba(31, 41, 90, 0.16);
+  white-space: nowrap;
+}
+
+.sasha-bubble::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  bottom: 16px;
+  border: 6px solid transparent;
+  border-right-color: #ffffff;
 }
