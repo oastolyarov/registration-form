@@ -8,17 +8,21 @@
 </head>
 <body>
   <div class="form-container">
-    <h1>Регистрация</h1>
+    <div class="camera-icon" aria-hidden="true"><span></span></div>
+    <div class="wordmark">Instagram</div>
+    <h1>Создайте аккаунт</h1>
+    <p class="intro">Регистрируйтесь, чтобы делиться моментами<br>и быть ближе к тем, кто вам дорог.</p>
+    <div class="divider"><span>РЕГИСТРАЦИЯ</span></div>
     <form id="signupForm" novalidate>
       <div class="field">
         <label for="phone">Телефон</label>
-        <input type="text" id="phone" name="phone" placeholder="+79991234567">
+        <input type="text" id="phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="+79991234567">
         <span class="error" id="phoneError"></span>
       </div>
 
       <div class="field">
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" placeholder="Минимум 8 символов">
+        <input type="password" id="password" name="password" autocomplete="new-password" placeholder="Минимум 8 символов">
         <div class="strength-meter">
           <div class="strength-bar" id="strengthBar"></div>
         </div>
@@ -28,13 +32,14 @@
 
       <div class="field">
         <label for="confirmPassword">Повторите пароль</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
+        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password" placeholder="Повторите пароль">
         <span class="error" id="confirmError"></span>
       </div>
 
       <button type="submit" id="submitBtn">Зарегистрироваться</button>
       <div class="success" id="successMessage"></div>
     </form>
+    <p class="footer-note">Каждый момент — начало новой истории.</p>
   </div>
 
   <script src="script.js"></script>
