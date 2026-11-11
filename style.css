@@ -1,105 +1,565 @@
+/* Оформление по мотивам «Sign Up Flow» (romanvasnev, 21st.dev): токены Apple HIG, светлая и тёмная тема. */
+
+:root {
+  --bg: #F2F2F7;
+  --dot: rgba(0, 0, 0, .07);
+  --card: #FFFFFF;
+  --fill: rgba(118, 118, 128, .12);
+  --label: #000000;
+  --secondary: rgba(60, 60, 67, .6);
+  --tertiary: rgba(60, 60, 67, .3);
+  --separator: rgba(60, 60, 67, .18);
+  --accent: #007AFF;
+  --red: #FF3B30;
+  --orange: #FF9500;
+  --green: #34C759;
+  --shadow: 0 0 0 .5px rgba(0, 0, 0, .05), 0 20px 50px rgba(0, 0, 0, .1);
+  --ease: cubic-bezier(.2, .9, .25, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --dot: rgba(255, 255, 255, .06);
+    --card: #1C1C1E;
+    --fill: rgba(118, 118, 128, .24);
+    --label: #FFFFFF;
+    --secondary: rgba(235, 235, 245, .6);
+    --tertiary: rgba(235, 235, 245, .3);
+    --separator: rgba(84, 84, 88, .6);
+    --accent: #0A84FF;
+    --red: #FF453A;
+    --orange: #FF9F0A;
+    --green: #30D158;
+    --shadow: 0 0 0 .5px rgba(255, 255, 255, .07), 0 24px 60px rgba(0, 0, 0, .55);
+    color-scheme: dark;
+  }
+}
+
 * {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 body {
-  background: #f4f5f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--label);
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--dot) 0 1px, transparent 1.4px);
+  background-size: 20px 13px;
+  background-position: -6px -1px;
 }
 
-.form-container {
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  width: 360px;
+/* ---------- карточка ---------- */
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 28px 24px 24px;
+  border-radius: 24px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
 
-h1 {
-  font-size: 22px;
+.view {
+  animation: view-in .45s var(--ease);
+}
+
+.head {
   margin-bottom: 24px;
-  color: #1a1a2e;
 }
+
+h1,
+h2 {
+  margin: 0;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sub {
+  margin: 8px 0 0;
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--secondary);
+}
+
+/* ---------- поля ---------- */
 
 .field {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 label {
   display: block;
-  font-size: 14px;
-  margin-bottom: 6px;
-  color: #333;
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--secondary);
 }
 
-input {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #d0d3d9;
-  border-radius: 8px;
-  font-size: 14px;
+/* Поле без рамки: видно по заливке, фокус и ошибка — внутреннее кольцо. */
+.control {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--fill);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  transition: box-shadow .2s;
 }
 
-input:focus {
-  outline: none;
-  border-color: #4A6CF7;
+.control:focus-within {
+  box-shadow: inset 0 0 0 1.5px var(--accent);
 }
 
-.error {
-  display: block;
-  color: #e5484d;
-  font-size: 12px;
-  margin-top: 6px;
-  min-height: 14px;
+.control.invalid {
+  box-shadow: inset 0 0 0 1.5px var(--red);
 }
 
-.strength-meter {
-  height: 6px;
-  background: #eaeaea;
-  border-radius: 4px;
-  margin-top: 8px;
-  overflow: hidden;
-}
-
-.strength-bar {
+.control input {
+  flex: 1;
+  min-width: 0;
   height: 100%;
-  width: 0%;
-  background: #e5484d;
-  transition: width 0.3s ease, background 0.3s ease;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 12px;
+  outline: none;
+  background: transparent;
+  color: var(--label);
+  font: inherit;
+  font-size: 17px;
+}
+
+.control input::placeholder {
+  color: var(--tertiary);
+}
+
+.control input[type="password"]:not(:placeholder-shown) {
+  letter-spacing: .12em;
+}
+
+/* телефон: фиксированный префикс +7 */
+.dial {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 0 14px;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+
+.flag {
+  width: 21px;
+  height: 15px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 .5px var(--separator);
+}
+
+.divider {
+  flex: none;
+  width: 1px;
+  height: 24px;
+  background: var(--separator);
+}
+
+#phone {
+  padding-left: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* кнопки-иконки внутри поля */
+.clear,
+.eye {
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.clear {
+  width: 18px;
+  height: 18px;
+  margin-right: 14px;
+  border-radius: 50%;
+  background: var(--tertiary);
+  animation: pop .25s var(--ease);
+}
+
+.clear svg {
+  width: 10px;
+  height: 10px;
+  fill: none;
+  stroke: var(--card);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+}
+
+.eye {
+  width: 40px;
+  height: 40px;
+  margin-right: 5px;
+  border-radius: 10px;
+  color: var(--secondary);
+}
+
+.eye svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.eye-slash {
+  stroke-dasharray: 23;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset .3s var(--ease);
+}
+
+.eye[aria-pressed="true"] .eye-slash {
+  stroke-dashoffset: 23;
+}
+
+.clear:focus-visible,
+.eye:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* галочка совпадения паролей */
+.match {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-right: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  transform: scale(.3);
+  opacity: 0;
+  transition: transform .35s var(--spring), opacity .2s;
+}
+
+.match svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.control.matched .match {
+  transform: none;
+  opacity: 1;
+}
+
+/* ---------- надёжность пароля ---------- */
+
+.strength {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.strength-track {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.strength-track span {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--fill);
+  transition: background-color .3s var(--ease);
+}
+
+.strength[data-level="1"] .strength-track span:first-child {
+  background: var(--red);
+}
+
+.strength[data-level="2"] .strength-track span:nth-child(-n + 2) {
+  background: var(--orange);
+}
+
+.strength[data-level="3"] .strength-track span {
+  background: var(--green);
 }
 
 .strength-label {
-  display: block;
-  font-size: 12px;
-  margin-top: 4px;
-  color: #666;
+  min-width: 72px;
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--secondary);
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #4A6CF7;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  cursor: pointer;
-  margin-top: 8px;
+.strength[data-level="1"] .strength-label {
+  color: var(--red);
 }
 
-button:hover {
-  background: #3a5ce4;
+.strength[data-level="2"] .strength-label {
+  color: var(--orange);
 }
 
-.success {
-  margin-top: 16px;
-  color: #1a7f37;
+.strength[data-level="3"] .strength-label {
+  color: var(--green);
+}
+
+.rules {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
+  line-height: 18px;
+  color: var(--secondary);
+  transition: color .2s;
+}
+
+.rules li.ok {
+  color: var(--label);
+}
+
+.check {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--tertiary);
+  transition: background-color .2s, box-shadow .2s;
+}
+
+.check svg {
+  width: 11px;
+  height: 11px;
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: scale(.3);
+  opacity: 0;
+  transition: transform .35s var(--spring), opacity .2s;
+}
+
+.rules li.ok .check {
+  background: var(--green);
+  box-shadow: none;
+}
+
+.rules li.ok .check svg {
+  transform: none;
+  opacity: 1;
+}
+
+/* ---------- ошибки ---------- */
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--red);
+  animation: fade-in .25s ease;
+}
+
+.error:empty {
+  display: none;
+}
+
+.error::before {
+  content: "";
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: 1.5px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7.25' fill='none' stroke='black' stroke-width='1.5'/%3E%3Cpath d='M8 4.5v4.2' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='11.2' r='.95'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7.25' fill='none' stroke='black' stroke-width='1.5'/%3E%3Cpath d='M8 4.5v4.2' stroke='black' stroke-width='1.6' stroke-linecap='round'/%3E%3Ccircle cx='8' cy='11.2' r='.95'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- кнопки ---------- */
+
+.btn {
+  width: 100%;
+  height: 50px;
+  margin-top: 6px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #FFFFFF;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .2s, background-color .2s, color .2s;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(.98);
+}
+
+.btn:disabled {
+  background: var(--fill);
+  color: var(--tertiary);
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn-plain {
+  background: transparent;
+  color: var(--accent);
+}
+
+/* ---------- успех ---------- */
+
+.done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 0 0;
   text-align: center;
-  min-height: 16px;
+}
+
+.done-badge {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+}
+
+.done-badge circle {
+  fill: var(--green);
+  transform-origin: 26px 26px;
+  animation: ring .45s var(--spring) both;
+}
+
+.done-badge path {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 4.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw .45s var(--ease) .3s forwards;
+}
+
+.done .sub {
+  max-width: 300px;
+}
+
+.done .sub b {
+  color: var(--label);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.done .btn {
+  margin-top: 24px;
+}
+
+/* ---------- служебное ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateX(28px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes pop {
+  0% { transform: scale(.5); opacity: 0; }
+  60% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes ring {
+  0% { transform: scale(.4); opacity: 0; }
+  70% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 380px) {
+  .card {
+    padding: 24px 18px 20px;
+    border-radius: 20px;
+  }
+
+  .rules {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+  }
 }

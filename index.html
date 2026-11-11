@@ -3,39 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Форма регистрации — учебный проект</title>
+  <meta name="color-scheme" content="light dark">
+  <title>Регистрация</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="form-container">
-    <h1>Регистрация</h1>
-    <form id="signupForm" novalidate>
+  <!-- Оформление по мотивам компонента «Sign Up Flow» (romanvasnev) с 21st.dev, перенесено на чистые HTML/CSS/JS -->
+  <main class="card">
+    <form id="signupForm" class="view" novalidate>
+      <header class="head">
+        <h1>Создайте аккаунт</h1>
+        <p class="sub">Нужны только номер телефона и пароль.</p>
+      </header>
+
       <div class="field">
         <label for="phone">Телефон</label>
-        <input type="text" id="phone" name="phone" placeholder="+79991234567">
-        <span class="error" id="phoneError"></span>
+        <div class="control" id="phoneControl">
+          <span class="dial" aria-hidden="true">
+            <svg class="flag" viewBox="0 0 21 15">
+              <clipPath id="flagClip"><rect width="21" height="15" rx="3"/></clipPath>
+              <g clip-path="url(#flagClip)">
+                <rect width="21" height="5" fill="#FFFFFF"/>
+                <rect y="5" width="21" height="5" fill="#0039A6"/>
+                <rect y="10" width="21" height="5" fill="#D52B1E"/>
+              </g>
+            </svg>
+            +7
+          </span>
+          <span class="divider" aria-hidden="true"></span>
+          <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel-national"
+                 placeholder="(999) 123-45-67" aria-describedby="phoneHint phoneError">
+          <button type="button" class="clear" id="phoneClear" aria-label="Очистить номер" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+        <span class="sr-only" id="phoneHint">Код страны +7 уже указан, введите 10 цифр номера.</span>
+        <p class="error" id="phoneError" aria-live="polite"></p>
       </div>
 
       <div class="field">
         <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" placeholder="Минимум 8 символов">
-        <div class="strength-meter">
-          <div class="strength-bar" id="strengthBar"></div>
+        <div class="control" id="passwordControl">
+          <input type="password" id="password" name="password" autocomplete="new-password"
+                 placeholder="Придумайте пароль" aria-describedby="passwordRules passwordError">
+          <button type="button" class="eye" data-toggle="password" aria-label="Показать пароль" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/>
+              <circle cx="12" cy="12" r="3"/>
+              <path class="eye-slash" d="M4 20L20 4"/>
+            </svg>
+          </button>
         </div>
-        <span class="strength-label" id="strengthLabel"></span>
-        <span class="error" id="passwordError"></span>
+
+        <div class="strength" id="strengthMeter" data-level="0">
+          <div class="strength-track" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="strength-label" id="strengthLabel"></span>
+        </div>
+
+        <ul class="rules" id="passwordRules" aria-label="Требования к паролю">
+          <li data-rule="length"><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>От 8 символов<span class="sr-only rule-state">: не выполнено</span></li>
+          <li data-rule="digit"><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Цифра 0–9<span class="sr-only rule-state">: не выполнено</span></li>
+          <li data-rule="lower"><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Строчная a–z<span class="sr-only rule-state">: не выполнено</span></li>
+          <li data-rule="upper"><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Заглавная A–Z<span class="sr-only rule-state">: не выполнено</span></li>
+          <li data-rule="special"><span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Спецсимвол ! ? # %<span class="sr-only rule-state">: не выполнено</span></li>
+        </ul>
+        <p class="error" id="passwordError" aria-live="polite"></p>
       </div>
 
       <div class="field">
         <label for="confirmPassword">Повторите пароль</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль">
-        <span class="error" id="confirmError"></span>
+        <div class="control" id="confirmControl">
+          <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password"
+                 placeholder="Тот же пароль ещё раз" aria-describedby="confirmError">
+          <span class="match" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+        </div>
+        <p class="error" id="confirmError" aria-live="polite"></p>
       </div>
 
-      <button type="submit" id="submitBtn">Зарегистрироваться</button>
-      <div class="success" id="successMessage"></div>
+      <button type="submit" class="btn" id="submitBtn" disabled>Зарегистрироваться</button>
     </form>
-  </div>
+
+    <section class="view done" id="successView" hidden>
+      <svg class="done-badge" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="22"/>
+        <path d="M16 27l7 7 13-15"/>
+      </svg>
+      <h2>Регистрация прошла успешно!</h2>
+      <p class="sub" id="successMessage" aria-live="polite"></p>
+      <button type="button" class="btn btn-plain" id="restartBtn">Зарегистрировать ещё</button>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>
