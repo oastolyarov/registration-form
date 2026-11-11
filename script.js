@@ -34,7 +34,24 @@ function getPasswordStrength(value) {
 }
 
 function isPasswordValid(value) {
-  return value.length >= 8;
+  if (value.length < 8 || value.length > 30) return false;
+  if (/\s/.test(value)) return false;
+  if (!/[0-9]/.test(value)) return false;
+  if (!/[^a-zA-Z0-9]/.test(value)) return false;
+  if (!/[a-zA-Z]/.test(value)) return false;
+
+  return true;
+}
+
+function getPasswordErrorMessage(value) {
+  if (value.length === 0) return '';
+  if (/\s/.test(value)) return 'Пароль не должен содержать пробелов';
+  if (value.length < 8) return 'Пароль слишком короткий: минимум 8 символов';
+  if (value.length > 30) return 'Пароль слишком длинный: максимум 30 символов';
+  if (!/[a-zA-Z]/.test(value)) return 'Пароль должен содержать хотя бы одну букву';
+  if (!/[0-9]/.test(value)) return 'Пароль должен содержать хотя бы одну цифру';
+  if (!/[^a-zA-Z0-9]/.test(value)) return 'Пароль должен содержать хотя бы один спецсимвол';
+  return '';
 }
 
 function doPasswordsMatch(password, confirm) {
@@ -79,13 +96,7 @@ phoneInput.addEventListener('input', () => {
 passwordInput.addEventListener('input', () => {
   updateStrengthUI(passwordInput.value);
 
-  if (passwordInput.value.length === 0) {
-    passwordError.textContent = '';
-  } else if (!isPasswordValid(passwordInput.value)) {
-    passwordError.textContent = 'Пароль слишком слабый: минимум 8 символов, добавьте цифры или спецсимволы';
-  } else {
-    passwordError.textContent = '';
-  }
+  passwordError.textContent = getPasswordErrorMessage(passwordInput.value);
 
   if (confirmInput.value.length > 0) {
     confirmError.textContent = doPasswordsMatch(passwordInput.value, confirmInput.value)
