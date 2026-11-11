@@ -11,8 +11,6 @@ HTML/CSS/JS без сборки и зависимостей. Форма (тел�
 - **Тип:** статический сайт (SPA-подобная форма, без серверной части)
 - **Стек:** HTML5, CSS3, Vanilla JavaScript (ES6), без библиотек и сборщиков
 - **Запуск:** открытие `index.html` в браузере; установка не требуется
-- **Деплой:** GitHub Pages (`https://chinchilka.github.io/registration-form/`)
-- **Репозиторий:** `ChinchilKa/registration-form`
 
 ---
 
