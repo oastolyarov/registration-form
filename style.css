@@ -214,3 +214,113 @@ button:disabled {
   transform: translate(-50%, 0);
   opacity: 1;
 }
+
+/* Всплывающее «От Паши ок!» в нижнем правом углу */
+.pasha-pop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.92);
+  transform-origin: bottom right;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  pointer-events: none;
+}
+
+.pasha-pop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.pasha-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(31, 41, 90, 0.3);
+}
+
+.pasha-bubble {
+  position: relative;
+  margin-bottom: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 8px 24px rgba(31, 41, 90, 0.16);
+  white-space: nowrap;
+}
+
+.pasha-bubble::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  bottom: 16px;
+  border: 6px solid transparent;
+  border-left-color: #ffffff;
+}
+
+/* Зеркальный блок слева — «От Саши тоже!» */
+.sasha-pop {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.92);
+  transform-origin: bottom left;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  pointer-events: none;
+}
+
+.sasha-pop.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.sasha-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 12px 30px rgba(31, 41, 90, 0.3);
+}
+
+.sasha-bubble {
+  position: relative;
+  margin-bottom: 22px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 8px 24px rgba(31, 41, 90, 0.16);
+  white-space: nowrap;
+}
+
+.sasha-bubble::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  bottom: 16px;
+  border: 6px solid transparent;
+  border-right-color: #ffffff;
+}
